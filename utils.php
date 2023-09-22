@@ -5,4 +5,8 @@ function testInput($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+
+function logError($message) {
+    echo "LOGGING TO THE SERVER: ". $message;
+}
 ?>

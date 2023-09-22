@@ -48,8 +48,14 @@ function processRequest($page){
             require_once('register.php');
             $data = validateRegister();
             if($data['valid']){
-            saveUser($data['email'], $data['username'], $data['password']);
+            try{
+                saveUser($data['email'], $data['username'], $data['password']);
                 $page = "login";
+            }
+            catch(Exception $e){
+                $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+                logerror("registration failed: " . $e -> getMessage());
+            }
             }
             break;
     }  
@@ -197,7 +203,8 @@ function showMenu() {
 
 function showContent($data)
 {
-    echo '<section>'; 
+    echo '<section>';
+    echo '<span class="error">'. getArrayVar($data, 'genericErr'). '</span>'; 
     switch($data['page'])
     {
         case 'home':
