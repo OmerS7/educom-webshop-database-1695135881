@@ -9,7 +9,7 @@ function showRegisterHeader() {
 
 function validateRegister() {
         $username = $email = $password = $repeatpassword = ""; 
-        $usernameErr = $emailErr = $passwordErr = $repeatpasswordErr = ""; 
+        $usernameErr = $emailErr = $passwordErr = $repeatpasswordErr = $genericErr = ""; 
         $valid = false; 
     
    
@@ -39,12 +39,18 @@ function validateRegister() {
         }
 
         if (empty($usernameErr) && empty($emailErr) && empty($passwordErr) && empty($repeatpasswordErr)) {
-            if (doesEmailExist($email)) {
-                $emailErr = "Email is al geregistreerd";
-            } else {
-                $valid = true;
+        
+            try{ 
+                if (doesEmailExist($email)) {
+                    $emailErr = "Email is al geregistreerd";
+                } else {
+                    $valid = true;
+                }
             }
-            
+            catch(Exception $e){
+                $genericErr = "Er is een technische storing. Probeer het later nog eens";
+                logerror("register failed: " . $e -> getMessage());
+            }
         }
     }
 
@@ -57,7 +63,8 @@ function validateRegister() {
         'usernameErr' => $usernameErr,
         'emailErr' => $emailErr,
         'passwordErr' => $passwordErr,
-        'repeatpasswordErr' => $repeatpasswordErr
+        'repeatpasswordErr' => $repeatpasswordErr,
+        'genericErr' => $genericErr
     );
 }
  

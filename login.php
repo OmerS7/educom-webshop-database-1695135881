@@ -17,6 +17,7 @@ function validateLogin() {
     $email = $password = "";
     $emailErr = $passwordErr = "";
     $username = "";
+    $genericErr= "";
     $valid = false;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,17 +31,24 @@ function validateLogin() {
             } 
 
         if (empty($emailErr) && empty($passwordErr)){
-            $user = authenticateUser($email, $password);
-            if (empty($user)) {
-                $emailErr = "Onbekend emailadres of onjuist wachtwoord";
-            } else {
-                $valid = true;
-                $username = $user['username'];
+            try{
+                $user = authenticateUser($email, $password);
+                if (empty($user)) {
+                    $emailErr = "Onbekend emailadres of onjuist wachtwoord";
+                } else {
+                    $valid = true;
+                    $username = $user['username'];
+                }
             }
+            catch(Exception $e){
+                $genericErr = "Er is een technische storing. Probeer het later nog eens";
+                logerror("logIn failed: " . $e -> getMessage());
+            }
+            
         } 
     }   
     return array('email' => $email, 'emailErr' => $emailErr, 'password' => $password, 
-                 'passwordErr' => $passwordErr, 'valid' => $valid, 'username' => $username); 
+                 'passwordErr' => $passwordErr, 'valid' => $valid, 'username' => $username, 'genericErr' => $genericErr); 
 }
 
 function showLoginForm($data) {

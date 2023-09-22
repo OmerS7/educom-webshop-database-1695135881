@@ -14,32 +14,28 @@ function connectDatabase(){
 
 function findUserByEmail($email){
     $conn = connectDatabase();
-    $sql ="SELECT * FROM users WHERE email ='$email'";
-    $result = mysqli_query($conn, $sql);
+    try{
+        $sql ="SELECT * FROM users WHERE email ='$email'";
+        $result = mysqli_query($conn, $sql);
 
-    $user= mysqli_fetch_assoc($result);    
-    /*
-    if (mysqli_num_rows($result) > 0){
-        while($row = mysqli_fetch_assoc($result)) {
-            echo "id: " . $row["id"]. " - email: " .
-       $row["email"]. " " . $row["password"]. "<br>";
-        }
-    } else {
-        echo "0 results";
-    }*/
-
-    mysqli_close($conn);
-    return $user;
+        $user= mysqli_fetch_assoc($result);
+        return $user;   
+    } finally{
+        mysqli_close($conn);
+    }
 }
 
 function saveUser($email,$username,$password){
     $conn = connectDatabase();
-    $sql ="INVERT INTO users (username, email, `password`)
-    VALUES ('$username', '$email', '$password')";
-    $result = mysqli_query($conn, $sql);
-    if(!$result){
-        throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
-    }
-    mysqli_close($conn);
+    try{
+        $sql ="INSERT INTO users (username, email, `password`)
+        VALUES ('$username', '$email', '$password')";
+        $result = mysqli_query($conn, $sql);
+        if(!$result){
+            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+        }
+    } finally {
+        mysqli_close($conn);
+    } 
 }
 ?>
