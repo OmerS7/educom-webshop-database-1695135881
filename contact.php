@@ -5,6 +5,7 @@ function showContactHeader(){
 }
 
 require_once 'utils.php';
+require_once 'user_service.php';
 
 function showContactThanks($data) {
     echo '<p class="thankYou"> Bedankt voor uw reactie! </p>';
@@ -54,12 +55,11 @@ function validateContact(){
         }
 
         if (empty($nameErr) && empty($emailErr) && empty($phoneErr) && empty($salutationErr) && empty($communicationErr) && empty($commentErr)) {
-            $valid = true;
+            $valid =true;
         }
     }
     return array('name' => $name, 'nameErr' => $nameErr, 'email' => $email, 'emailErr' => $emailErr, 'phone' => $phone, 'phoneErr' => $phoneErr, 'salutation' => $salutation, 'salutationErr' => $salutationErr, 'communication' => $communication, 'communicationErr' => $communicationErr,'comment' => $comment, 'commentErr' => $commentErr, 'valid' => $valid);
 }
-
 
 function showContactForm($data) {
     $name = $data['name'];

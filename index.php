@@ -36,6 +36,14 @@ function processRequest($page){
             require_once('contact.php');
             $data = validateContact();
             if($data['valid']){
+            try{
+                saveContact($data['name'], $data['phone'], $data['email'], $data['salutation'], $data['communication'], $data['comment']);
+                $page = "contact";
+            }
+            catch(Exception $e){
+                $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+                logerror("registration failed: " . $e -> getMessage());
+            }
                 $page = "thanks";
             }
             break;      

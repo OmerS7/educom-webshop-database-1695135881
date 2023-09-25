@@ -38,4 +38,17 @@ function saveUser($email,$username,$password){
         mysqli_close($conn);
     } 
 }
-?>
+
+function saveContact($name,$phone,$email,$salutation,$communication,$comment){
+    $conn = connectDatabase();
+    try{
+        $sql ="INSERT INTO contact(`name`, phone, email, salutation, communication, comment)
+        VALUES ('$name', '$phone', '$email', '$salutation', '$communication', '$comment')";
+        $result = mysqli_query($conn, $sql);
+        if(!$result){
+            throw new Exception("save contact failed, sql:$sql,error: " . mysqli_error($conn));
+        }
+    } finally {
+        mysqli_close($conn);
+    }
+}

@@ -20,4 +20,7 @@ function authenticateUser($email,$password){
 function storeUser($email,$username,$password){
    saveUser($email,$username,$password);
 }
-?>
+
+function storeContact($name,$phone,$email,$salutation,$communication,$comment){
+    saveContact($name,$phone,$email,$salutation,$communication,$comment);
+}
