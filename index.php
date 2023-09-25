@@ -35,15 +35,15 @@ function processRequest($page){
             require_once('contact.php');
             $data = validateContact();
             if($data['valid']){
-            try{
-                saveContact($data['name'], $data['phone'], $data['email'], $data['salutation'], $data['communication'], $data['comment']);
-                $page = "contact";
-            }
-            catch(Exception $e){
-                $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
-                logerror("registration failed: " . $e -> getMessage());
-            }
-                $page = "thanks";
+                try{
+                    storeContact($data['name'], $data['phone'], $data['email'], $data['salutation'], $data['communication'], $data['comment']);
+                    $page = "contact";
+                    $page = "thanks";
+                }
+                catch(Exception $e){
+                    $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+                    logerror("registration failed: " . $e -> getMessage());
+                }
             }
             break;      
         case "logout":
@@ -61,7 +61,7 @@ function processRequest($page){
             $data = validateRegister();
             if($data['valid']){
             try{
-                saveUser($data['email'], $data['username'], $data['password']);
+                storeUser($data['email'], $data['username'], $data['password']);
                 $page = "login";
             }
             catch(Exception $e){
