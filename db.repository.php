@@ -52,3 +52,19 @@ function saveContact($name,$phone,$email,$salutation,$communication,$comment){
         mysqli_close($conn);
     }
 }
+
+
+/* wachtwoord wijzigen functie
+function findUserbyPassword($password){
+    $conn = connectDatabase();
+    try{
+        $sql ="SELECT * FROM users WHERE `password` ='$password'";
+        $result = mysqli_query($conn, $sql);
+
+        $user= mysqli_fetch_assoc($result);
+        return $userpassword;   
+    } finally{
+        mysqli_close($conn);
+    }
+}
+*/

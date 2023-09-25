@@ -22,7 +22,6 @@ function getRequestedPage()
 }
 
 function processRequest($page){ 
-    /*$data = array();*/   
     switch($page){
         case "login":
             require_once('login.php');
@@ -52,6 +51,11 @@ function processRequest($page){
             doLogoutUser();
             $page = "home";
             break;
+        /*case "changepassword":
+            require_once('passwordC.php');
+            $data = validatePassword();
+            }    
+            break;*/
         case "register":
             require_once('register.php');
             $data = validateRegister();
@@ -147,45 +151,14 @@ function showHeader($page)
         require_once('login.php');
         showLoginHeader();
         break;
+    case 'changepassword':
+        require_once('passwordC.php');
+        showChangePasswordHeader();
+        break;
    }
    
-   /*
-    if ($page == 'home') {
-        require_once('home.php');
-        showHomeHeader();
-    } elseif ($page == 'about'){
-        require_once('about.php');
-        showAboutHeader();
-    } elseif($page == 'contact'){
-        require_once('contact.php');
-        showContactHeader();
-    }elseif (isset($_SESSION['email'])){
-        $ingelogdeEmail = $_SESSION['email'];
-        echo "Welcome, $ingelogdeEmail! <a href='logout.php'>Logout</a>";    
-    } elseif($page == 'register'){
-        require_once('register.php');
-        showRegisterHeader();
-    } elseif($page == 'login'){
-        require_once('login.php');
-        showLoginHeader();
-    } 
-    */
     echo '</h1></header>' . PHP_EOL;
 }
-
-/*
-function showMenu()
-{
-    echo '<div class="menu">
-            <ul>
-              <li><a href="index.php?page=home">HOME</a></li>
-              <li><a href="index.php?page=about">ABOUT</a></li>
-              <li><a href="index.php?page=contact">CONTACT</a></li>
-              <li><a href="index.php?page=register">REGISTER</a></li>
-            </ul>
-          </div>' . PHP_EOL;
-}
-*/
 
 function showMenuItem($page, $label)
 {
@@ -199,6 +172,7 @@ function showMenu() {
     showMenuItem("about", "ABOUT"); 
     showMenuItem("contact", "CONTACT"); 
     if (isUserLoggedIn()) {
+        showMenuItem("passwordChange", "Wachtwoord wijzigen");
         showMenuItem("logout", "LOG OUT " . getLoggedInUser());
     } else {
         showMenuItem("register", "REGISTER");
@@ -238,6 +212,10 @@ function showContent($data)
         case 'login':
             require_once('login.php');
             showLoginForm($data);
+            break;
+        case 'changepassword':
+            require_once('passwordC.php');
+            showChangePasswordForm($data);
             break;
         case 'logout':
             doLogoutUser();
