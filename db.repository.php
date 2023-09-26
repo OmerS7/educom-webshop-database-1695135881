@@ -56,7 +56,19 @@ function saveContact($name,$phone,$email,$salutation,$communication,$comment){
     }
 }
 
-function
+function findUserByPassword($password){
+    $conn = connectDatabase();
+    try{
+        ///$email = mysqli_real_escape_string($conn, $email);
+        $sql ="SELECT * FROM users WHERE `password` ='$password'";
+        $result = mysqli_query($conn, $sql);
+
+        $userpassword= mysqli_fetch_assoc($result);
+        return $userpassword;   
+    } finally{
+        mysqli_close($conn);
+    }
+}
 
 
 

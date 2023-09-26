@@ -37,12 +37,12 @@ function validatePassword() {
         
         if (empty($passwordErr) && empty($changepasswordErr) && empty($repeatchangepasswordErr)) {
             try{
-            $user = authenticateUser($email,$password); 
-            if (empty($user)) {
+            $userpassword = authenticateUserPassword($password); 
+            if (empty($userpassword)) {
                 $changepasswordErr = "Wachtwoord is ongeldig";
             } else {
                 $valid = true;
-                $password = $user ['password'];
+                $password = $userpassword ['password'];
             }
         }
             catch(Exception $e){
