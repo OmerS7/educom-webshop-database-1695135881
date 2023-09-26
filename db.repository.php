@@ -15,7 +15,7 @@ function connectDatabase(){
 function findUserByEmail($email){
     $conn = connectDatabase();
     try{
-        $email = mysqli_real_excape_string($conn, $email);
+        $email = mysqli_real_escape_string($conn, $email);
         $sql ="SELECT * FROM users WHERE email ='$email'";
         $result = mysqli_query($conn, $sql);
 
@@ -29,7 +29,7 @@ function findUserByEmail($email){
 function saveUser($email,$username,$password){
     $conn = connectDatabase();
     try{
-        $email = mysqli_real_excape_string($conn, $email);
+        $email = mysqli_real_escape_string($conn, $email);
         $sql ="INSERT INTO users (username, email, `password`)
         VALUES ('$username', '$email', '$password')";
         $result = mysqli_query($conn, $sql);
@@ -44,7 +44,7 @@ function saveUser($email,$username,$password){
 function saveContact($name,$phone,$email,$salutation,$communication,$comment){
     $conn = connectDatabase();
     try{
-        $email = mysqli_real_excape_string($conn, $email);
+        $email = mysqli_real_escape_string($conn, $email);
         $sql ="INSERT INTO contact(`name`, phone, email, salutation, communication, comment)
         VALUES ('$name', '$phone', '$email', '$salutation', '$communication', '$comment')";
         $result = mysqli_query($conn, $sql);
@@ -57,17 +57,17 @@ function saveContact($name,$phone,$email,$salutation,$communication,$comment){
 }
 
 
-/* wachtwoord wijzigen functie
-function findUserbyPassword($password){
+/// wachtwoord wijzigen functie
+function saveChangePassword($password){
     $conn = connectDatabase();
     try{
-        $sql ="SELECT * FROM users WHERE `password` ='$password'";
+        $sql ="INSERT INTO users (`password`);
+        VALUES ('$password')";
         $result = mysqli_query($conn, $sql);
-
-        $user= mysqli_fetch_assoc($result);
-        return $userpassword;   
-    } finally{
+        if(!$result){
+            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+        }
+    } finally {
         mysqli_close($conn);
-    }
+    } 
 }
-*/

@@ -46,11 +46,16 @@ function processRequest($page){
             doLogoutUser();
             $page = "home";
             break;
-        /*case "changepassword":
+        case "changepassword":
             require_once('passwordC.php');
             $data = validatePassword();
+            if ($data['valid']){
+                $data = doChangePassword($data);
+                if ($data['succes']) {
+                $page = "login";
+                }
             }    
-            break;*/
+            break;
         case "register":
             require_once('register.php');
             $data = validateRegister();
@@ -92,6 +97,17 @@ function doRegisterUser($data) {
     return $data;
 }
 
+function doChangePassword($data){
+    $data['succes'] = false;
+    try{
+        storeChangePassword($data['password'], $data['changepassword'], $data['repeatchangepassword']);
+    }
+    catch(Exception $e){
+        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+        logerror("Registraation failed: " . $e -> getMessage());
+    }
+    return $data;
+}
             
 function showResponsePage ($data)
 {
