@@ -21,11 +21,12 @@ header {
     align-items: center;
     list-style: none;
     text-decoration: none;
+    padding-inline-start: 0px;;
 }
 
 .menu ul li {
     display: inline;
-    margin-right: 10px;
+    /*margin-right: 10px;*/
    }
 
 .menu a {

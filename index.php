@@ -27,7 +27,7 @@ function processRequest($page){
             require_once('login.php');
             $data = validateLogin();
             if ($data['valid']){
-                doLoginUser($data['username']);
+                doLoginUser($data['username'], $data['userId']);
                 $page = "home";
             }
             break;   
@@ -52,7 +52,9 @@ function processRequest($page){
             if ($data['valid']){
                 $data = doChangePassword($data);
                 if ($data['succes']) {
-                $page = "login";
+                    $page = "login";
+                    $data['emailErr'] = "";
+                    $data['password'] = "";
                 }
             }    
             break;
@@ -68,6 +70,15 @@ function processRequest($page){
             break;
     }  
     $data['page'] = $page;
+    
+    $data['menu'] = array('home' => 'HOME', 'about' => 'ABOUT', 'contact' => 'CONTACT');
+    if (isUserLoggedIn()) {
+        $data['menu']['logout'] = "LOG OUT " . getLoggedInUser(); 
+        $data['menu']['changepassword'] = "Wachtwoord wijzigen";
+    } else {
+        $data['menu']['register'] = "REGISTER";
+        $data['menu']['login'] = "LOGIN";
+    }
     return $data;
 }
 
@@ -100,7 +111,9 @@ function doRegisterUser($data) {
 function doChangePassword($data){
     $data['succes'] = false;
     try{
-        storeChangePassword($data['password'], $data['changepassword'], $data['repeatchangepassword']);
+        storeChangePassword($data['userId'], $data['changepassword']);
+        $data['succes'] = true;
+        doLogoutUser(); 
     }
     catch(Exception $e){
         $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
@@ -148,7 +161,7 @@ function showBodySection($data)
 {
     echo '  <body>' . PHP_EOL;
     showHeader($data['page']);
-    showMenu();
+    showMenu($data);
     showContent($data);
     showFooter();
     echo '  </body>' .PHP_EOL;
@@ -198,23 +211,17 @@ function showMenuItem($page, $label)
     echo '<li><a href="index.php?page=' . $page . '">' . $label . '</a></li>';
 }
 
-function showMenu() { 
-    echo '<div class="menu">  
-        <ul>';
-    showMenuItem("home", "HOME"); 
-    showMenuItem("about", "ABOUT"); 
-    showMenuItem("contact", "CONTACT"); 
-    if (isUserLoggedIn()) {
-        showMenuItem("changepassword", "Wachtwoord wijzigen");
-        showMenuItem("logout", "LOG OUT " . getLoggedInUser());
-    } else {
-        showMenuItem("register", "REGISTER");
-        showMenuItem("login", "LOGIN");
-    } 
-    echo '
-        </ul>  
-    </div>' . PHP_EOL; 
-} 
+
+function showMenu($data) {  
+    echo '<div class="menu">   
+        <ul>';  
+    foreach($data['menu'] as $link => $label) { 
+        showMenuItem($link,$label); 
+    }
+    echo ' 
+        </ul>   
+    </div>' . PHP_EOL;  
+}
 
 function showContent($data)
 {

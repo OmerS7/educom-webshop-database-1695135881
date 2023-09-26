@@ -56,11 +56,11 @@ function saveContact($name,$phone,$email,$salutation,$communication,$comment){
     }
 }
 
-function findUserByPassword($password){
+function findUserById($userId){
     $conn = connectDatabase();
     try{
         ///$email = mysqli_real_escape_string($conn, $email);
-        $sql ="SELECT * FROM users WHERE `password` ='$password'";
+        $sql ="SELECT * FROM users WHERE `id` ='$userId'";
         $result = mysqli_query($conn, $sql);
 
         $userpassword= mysqli_fetch_assoc($result);
@@ -73,11 +73,10 @@ function findUserByPassword($password){
 
 
 /// wachtwoord wijzigen functie
-function saveChangePassword($password){
+function saveChangePassword($id,$password){
     $conn = connectDatabase();
     try{
-        $sql ="INSERT INTO users (`password`);
-        VALUES ('$password')";
+        $sql ="UPDATE users SET `password` ='$password' WHERE id = '$id'";
         $result = mysqli_query($conn, $sql);
         if(!$result){
             throw new Exception("save password failed, sql:$sql,error: " . mysqli_error($conn));

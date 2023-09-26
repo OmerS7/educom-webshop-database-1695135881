@@ -17,6 +17,7 @@ function validateLogin() {
     $email = $password = "";
     $emailErr = $passwordErr = "";
     $username = "";
+    $userId = 0;
     $genericErr= "";
     $valid = false;
 
@@ -38,6 +39,7 @@ function validateLogin() {
                 } else {
                     $valid = true;
                     $username = $user['username'];
+                    $userId = $user ['id'];
                 }
             }
             catch(Exception $e){
@@ -48,7 +50,7 @@ function validateLogin() {
         } 
     }   
     return array('email' => $email, 'emailErr' => $emailErr, 'password' => $password, 
-                 'passwordErr' => $passwordErr, 'valid' => $valid, 'username' => $username, 'genericErr' => $genericErr); 
+                 'passwordErr' => $passwordErr, 'valid' => $valid, 'username' => $username, 'genericErr' => $genericErr, 'userId' => $userId); 
 }
 
 function showLoginForm($data) {

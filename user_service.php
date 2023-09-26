@@ -22,8 +22,8 @@ function authenticateUser($email,$password){
     return $user;   
 }
 
-function authenticateUserPassword($password){
-    $userpassword = findUserByPassword($password);
+function authenticateUserPassword($id,$password){
+    $userpassword = findUserById($id);
         if (empty($userpassword)){
             return null;
         }
@@ -42,6 +42,6 @@ function storeContact($name,$phone,$email,$salutation,$communication,$comment){
     saveContact($name,$phone,$email,$salutation,$communication,$comment);
 }
 
-function storeChangePassword($changepassword,$repeatchangepassword){
-    saveChangePassword($changepassword,$repeatchangepassword);
+function storeChangePassword($userId,$password){
+    saveChangePassword($userId,$password);
 }

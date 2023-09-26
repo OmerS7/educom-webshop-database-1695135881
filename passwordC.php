@@ -12,8 +12,10 @@ function validatePassword() {
         $changepassword = $repeatchangepassword = ""; 
         $passwordErr = "";
         $changepasswordErr = $repeatchangepasswordErr = "";
-        $genericErr = ""; 
+        $genericErr = "";
+        $userId = 0; 
         $valid = false; 
+        $email="";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
         $password = testInput(getPostVar("password")); 
@@ -37,14 +39,15 @@ function validatePassword() {
         
         if (empty($passwordErr) && empty($changepasswordErr) && empty($repeatchangepasswordErr)) {
             try{
-            $userpassword = authenticateUserPassword($password); 
-            if (empty($userpassword)) {
-                $changepasswordErr = "Wachtwoord is ongeldig";
-            } else {
-                $valid = true;
-                $password = $userpassword ['password'];
+                $userId = getLoggedInUserId();   
+                $userpassword = authenticateUserPassword($userId,$password); 
+                if (empty($userpassword)) {
+                    $passwordErr = "Wachtwoord is ongeldig";
+                } else {
+                    $valid = true;
+                    $email = $userpassword['email'];
+                }
             }
-        }
             catch(Exception $e){
                 $genericErr = "Er is een technische storing. Probeer het later nog eens";
                 logerror("changepassword failed: " . $e -> getMessage());
@@ -59,7 +62,9 @@ function validatePassword() {
     'passwordErr' => $passwordErr,
     'changepasswordErr' => $changepasswordErr,
     'repeatchangepasswordErr' => $repeatchangepasswordErr,
-    'genericErr' => $genericErr
+    'genericErr' => $genericErr,
+    'userId' => $userId,
+    'email' => $email
     );        
 }
 
