@@ -205,7 +205,7 @@ function showMenu() {
     showMenuItem("about", "ABOUT"); 
     showMenuItem("contact", "CONTACT"); 
     if (isUserLoggedIn()) {
-        showMenuItem("passwordChange", "Wachtwoord wijzigen");
+        showMenuItem("changepassword", "Wachtwoord wijzigen");
         showMenuItem("logout", "LOG OUT " . getLoggedInUser());
     } else {
         showMenuItem("register", "REGISTER");

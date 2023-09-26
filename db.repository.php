@@ -56,6 +56,9 @@ function saveContact($name,$phone,$email,$salutation,$communication,$comment){
     }
 }
 
+function
+
+
 
 /// wachtwoord wijzigen functie
 function saveChangePassword($password){
@@ -65,7 +68,7 @@ function saveChangePassword($password){
         VALUES ('$password')";
         $result = mysqli_query($conn, $sql);
         if(!$result){
-            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+            throw new Exception("save password failed, sql:$sql,error: " . mysqli_error($conn));
         }
     } finally {
         mysqli_close($conn);

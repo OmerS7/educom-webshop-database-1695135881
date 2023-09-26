@@ -8,8 +8,11 @@ function showChangePasswordHeader() {
 }
 
 function validatePassword() {
-        $password = $changepassword = $repeatchangepassword = ""; 
-        $passwordErr = $changepasswordErr = $repeatchangedpasswordErr = $genericErr = ""; 
+        $password = "";
+        $changepassword = $repeatchangepassword = ""; 
+        $passwordErr = "";
+        $changepasswordErr = $repeatchangepasswordErr = "";
+        $genericErr = ""; 
         $valid = false; 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
@@ -18,22 +21,28 @@ function validatePassword() {
             $passwordErr = "Voer je huidige wachtwoord in";  
         }
 
-        $changedpassword = testInput (getPostVar("changepassword"));
+        $changepassword = testInput (getPostVar("changepassword"));
         if (empty($changepassword)){
             $changepasswordErr = "Voer een nieuw wachtwoord in";
         }
 
-        $repeatchangedpasswordErr = testInput (getPostVar("repeatchangedpassword"));
+        $repeatchangepassword = testInput (getPostVar("repeatchangepassword"));
         if (empty($repeatchangepassword)){
             $repeatchangepasswordErr = "Herhaal het nieuwe wachtwoord";
         }
+
+        if($changepassword !== $repeatchangepassword){
+            $repeatchangepasswordErr = "Herhaal wachtwoord komt niet overeen";
+        }
         
         if (empty($passwordErr) && empty($changepasswordErr) && empty($repeatchangepasswordErr)) {
-            try{ 
-            if (isPasswordOccupied($password)) {
+            try{
+            $user = authenticateUser($email,$password); 
+            if (empty($user)) {
                 $changepasswordErr = "Wachtwoord is ongeldig";
             } else {
                 $valid = true;
+                $password = $user ['password'];
             }
         }
             catch(Exception $e){
@@ -61,11 +70,11 @@ function showChangePasswordForm($data) {
             <span class="error">* '.$data['passwordErr'].'</span><br><br>
 
             <label for="changepassword">Nieuw wachtwoord:</label>
-            <input type="password" name="changepassword" value="'.$data["changepassword"]'".>
+            <input type="password" name="changepassword" value="'.$data["changepassword"].'">
             <span class="error">* '.$data['changepasswordErr'].'</span><br><br>
 
             <label for="repeatchangepassword">Herhaal nieuw wachtwoord:</label>
-            <input type="password" name="repeatchangepassword" value="'.$data["repeatchangepassword"]'".>
+            <input type="password" name="repeatchangepassword" value="'.$data["repeatchangepassword"].'">
             <span class="error">* '.$data['repeatchangepasswordErr'].'</span><br><br>
 
             <div class="changePasswordButton">
