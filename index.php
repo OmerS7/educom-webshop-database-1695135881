@@ -35,16 +35,11 @@ function processRequest($page){
             require_once('contact.php');
             $data = validateContact();
             if($data['valid']){
-                try{
-                    storeContact($data['name'], $data['phone'], $data['email'], $data['salutation'], $data['communication'], $data['comment']);
-                    $page = "contact";
+                $data = doStoreContact($data);
+                if ($data['succes']) {
                     $page = "thanks";
                 }
-                catch(Exception $e){
-                    $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
-                    logerror("registration failed: " . $e -> getMessage());
-                }
-            }
+            }    
             break;      
         case "logout":
             require_once('logout.php');
@@ -60,18 +55,40 @@ function processRequest($page){
             require_once('register.php');
             $data = validateRegister();
             if($data['valid']){
-            try{
-                storeUser($data['email'], $data['username'], $data['password']);
-                $page = "login";
-            }
-            catch(Exception $e){
-                $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
-                logerror("registration failed: " . $e -> getMessage());
-            }
+                $data = doRegisterUser($data);
+                if ($data['succes']){
+                    $page = "home";
+                }
             }
             break;
     }  
     $data['page'] = $page;
+    return $data;
+}
+
+function doStoreContact($data) {
+    $data['succes'] = false;
+    try{
+        storeContact($data['name'], $data['phone'], $data['email'], $data['salutation'], $data['communication'], $data['comment']);
+        $data['succes'] = true;
+    }
+    catch(Exception $e){
+        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+        logerror("registration failed: " . $e -> getMessage());
+    }
+    return $data;
+}
+
+function doRegisterUser($data) {
+    $data['succes'] = false;
+    try{
+        storeUser($data['email'], $data['username'], $data['password']);
+        $data['succes'] = true;
+    }
+    catch(Exception $e){
+        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+        logerror("Registraation failed: " . $e -> getMessage());
+    }
     return $data;
 }
 
