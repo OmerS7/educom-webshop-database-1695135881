@@ -85,3 +85,14 @@ function saveChangePassword($id,$password){
         mysqli_close($conn);
     } 
 }
+
+function selectItemInfo(){
+    $conn = connectDatabase();
+    try{
+        $sql="SELECT * FROM webshop";
+        $result = mysqli_query($conn, $sql);
+        return $result;
+    } finally{
+        mysqli_close($conn);
+    }
+} 

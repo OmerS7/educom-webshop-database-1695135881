@@ -68,10 +68,15 @@ function processRequest($page){
                 }
             }
             break;
+        case "webshop":
+            require_once('webshop.php');
+            $data = getAllProducts();
+            $page = "webshop";
+            break;
     }  
     $data['page'] = $page;
     
-    $data['menu'] = array('home' => 'HOME', 'about' => 'ABOUT', 'contact' => 'CONTACT');
+    $data['menu'] = array('home' => 'HOME', 'about' => 'ABOUT', 'webshop' => 'WEBSHOP', 'contact' => 'CONTACT');
     if (isUserLoggedIn()) {
         $data['menu']['logout'] = "LOG OUT " . getLoggedInUser(); 
         $data['menu']['changepassword'] = "Wachtwoord wijzigen";
@@ -185,6 +190,10 @@ function showHeader($page)
         require_once('about.php');
         showAboutHeader();
         break;
+    case 'webshop':
+        require_once('webshop.php');
+        showWebshopHeader();
+        break;
     case 'contact':
         require_once ('contact.php');
         showContactHeader();
@@ -240,6 +249,10 @@ function showContent($data)
         case 'contact':
             require_once('contact.php');
             showContactForm($data);
+            break;
+        case 'webshop':
+            require_once('webshop.php');
+            showWebshopContent($data);
             break;
         case 'thanks':
             require_once('contact.php');
