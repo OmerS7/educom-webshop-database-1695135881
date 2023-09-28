@@ -86,12 +86,14 @@ function saveChangePassword($id,$password){
     } 
 }
 
-function getAllProducts($productname, $price, $productimage){
+function getAllProducts(){
     $conn = connectDatabase();
     try{
-        $sql="SELECT * FROM webshop WHERE productname ='$productname' AND price ='$price' AND productimage ='$productimage'";
+        $sql="SELECT * FROM webshop";
         $result = mysqli_query($conn, $sql);
+        $row= mysqli_fetch_assoc($result);
         return $result;
+
     } finally{
         mysqli_close($conn);
     }
