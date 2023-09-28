@@ -70,9 +70,7 @@ function processRequest($page){
             break;
         case "webshop":
             require_once('webshop.php');
-            $data = getAllProducts();
-            $page = "webshop";
-            break;
+            $data = getProducts();
     }  
     $data['page'] = $page;
     
@@ -123,6 +121,19 @@ function doChangePassword($data){
     catch(Exception $e){
         $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
         logerror("Registraation failed: " . $e -> getMessage());
+    }
+    return $data;
+}
+
+function doShowProducts($data){
+    $data['succes'] = false;
+    try{
+        getProducts($data['productname'], $data['price'], $data['productimage']);
+        $data['succes'] = true;
+    }
+    catch(Exception $e){
+        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+        logerror("Product showing failed: " . $e -> getMessage());
     }
     return $data;
 }
