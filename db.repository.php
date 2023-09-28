@@ -89,11 +89,9 @@ function saveChangePassword($id,$password){
 function getAllProducts(){
     $conn = connectDatabase();
     try{
-        $sql="SELECT * FROM webshop";
+        $sql="SELECT * FROM products";
         $result = mysqli_query($conn, $sql);
-        $row= mysqli_fetch_assoc($result);
         return $result;
-
     } finally{
         mysqli_close($conn);
     }

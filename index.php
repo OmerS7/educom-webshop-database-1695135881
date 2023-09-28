@@ -70,7 +70,7 @@ function processRequest($page){
             break;
         case "webshop":
             require_once('webshop.php');
-            $data = getProducts($productname, $price, $productimage);
+            $data = doShowProducts($data);
     }  
     $data['page'] = $page;
     
