@@ -79,10 +79,11 @@ function processRequest($page){
     }  
     $data['page'] = $page;
     
-    $data['menu'] = array('home' => 'HOME', 'about' => 'ABOUT', 'webshop' => 'WEBSHOP', 'contact' => 'CONTACT');
+    $data['menu'] = array('home' => 'HOME', 'about' => 'ABOUT', 'contact' => 'CONTACT', 'webshop' => 'WEBSHOP');
     if (isUserLoggedIn()) {
-        $data['menu']['logout'] = "LOG OUT " . getLoggedInUser(); 
+        $data['menu']['shoppingCart'] = "Winkelwagen"; 
         $data['menu']['changepassword'] = "Wachtwoord wijzigen";
+        $data['menu']['logout'] = "LOG OUT " . getLoggedInUser();
     } else {
         $data['menu']['register'] = "REGISTER";
         $data['menu']['login'] = "LOGIN";
@@ -159,6 +160,16 @@ function doRetreiveProductId(){
         logerror("Product retreiving failed: " . $e -> getMessage());
     }
     return $data;
+}
+
+function handleAction(){
+    $action = getPostVar("action");
+        switch($action){
+            case 'AddToCart':
+                $id= getPostVar($id);
+                addToCart($id);
+                break;
+        }
 }
             
 function showResponsePage ($data)
