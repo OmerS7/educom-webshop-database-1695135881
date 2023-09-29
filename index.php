@@ -166,7 +166,7 @@ function handleAction(){
     $action = getPostVar("action");
         switch($action){
             case 'AddToCart':
-                $id= getPostVar($id);
+                $id= getPostVar('id');
                 addToCart($id);
                 break;
         }

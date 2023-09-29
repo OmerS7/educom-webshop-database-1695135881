@@ -1,7 +1,5 @@
 <?php
 
-
-
 function showWebshopHeader(){
     echo "Webshop";
 }
@@ -16,12 +14,14 @@ function showWebshopContent($data) {
             echo "<p>Prijs: €{$product['price']}</p>";
             echo "</a>";
             echo "</div>";
-        }
-    }
-    echo '<form method="POST" action="index.php">          
+            echo '<form method="POST" action="index.php">          
             <input type="hidden" name="action" value="addToCart">
-            <input type="hidden" name="id" value="'.$product['id'].'">
+            <input type="hidden" name="id" value="'.$product["productId"].'">
             <input type="hidden" name="page" value="webshop">
             <input type="submit" value="Toevoegen">
         </form>';
+        }
+    }
+    
+    
 }
