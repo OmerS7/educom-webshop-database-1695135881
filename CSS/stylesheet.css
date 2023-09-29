@@ -165,3 +165,7 @@ font-size: 30px;
     margin-right: auto;
     width: 250px;
 }
+
+.shoesize img {
+    max-width: 350px;
+}
