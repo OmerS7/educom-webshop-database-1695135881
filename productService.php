@@ -1,6 +1,10 @@
 <?php
 require_once 'db.repository.php';
 
-function getProducts($productname, $price, $productimage){
-    return getAllProducts($productname, $price, $productimage);
+function getProducts(){
+    return getAllProducts();
+}
+
+function getProduct($id){
+    return getProductById($id);
 }

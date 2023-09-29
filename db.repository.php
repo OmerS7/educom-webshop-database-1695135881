@@ -89,10 +89,25 @@ function saveChangePassword($id,$password){
 function getAllProducts(){
     $conn = connectDatabase();
     try{
+        $products = array();
         $sql="SELECT * FROM products";
         $result = mysqli_query($conn, $sql);
-        return $result;
+        while($row = mysqli_fetch_assoc($result)) {
+            $products[$row['productId']] = $row;
+        }
+        return $products;
     } finally{
         mysqli_close($conn);
     }
 } 
+
+function getProductById($id){
+    $conn = connectDatabase();
+    try{
+        $sql="SELECT * FROM products WHERE productId = $id";
+        $result = mysqli_query($conn, $sql);
+        return mysqli_fetch_assoc($result);
+    } finally{
+        mysqli_close($conn);
+    }
+}

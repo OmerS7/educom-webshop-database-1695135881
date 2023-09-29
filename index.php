@@ -70,7 +70,12 @@ function processRequest($page){
             break;
         case "webshop":
             require_once('webshop.php');
-            $data = doShowProducts($data);
+            $data = doRetreiveProducts();
+            break;
+        case "detail":
+            require_once('productDetail.php');
+            $data = doRetreiveProductId();
+            break;
     }  
     $data['page'] = $page;
     
@@ -125,15 +130,33 @@ function doChangePassword($data){
     return $data;
 }
 
-function doShowProducts($data){
+function doRetreiveProducts(){
+    $data = array();
     $data['succes'] = false;
     try{
-        getProducts($data['productname'], $data['price'], $data['productimage']);
+        require_once 'productService.php';
+        $data['products'] = getProducts();
         $data['succes'] = true;
     }
     catch(Exception $e){
         $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
-        logerror("Product showing failed: " . $e -> getMessage());
+        logerror("Product retreiving failed: " . $e -> getMessage());
+    }
+    return $data;
+}
+
+function doRetreiveProductId(){
+    $data = array();
+    $data['succes'] = false;
+    try{
+        require_once 'productService.php';
+        $id = getUrlVar('id');
+        $data['product'] = getProduct($id);
+        $data['succes'] = true;
+    }
+    catch(Exception $e){
+        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+        logerror("Product retreiving failed: " . $e -> getMessage());
     }
     return $data;
 }
@@ -264,6 +287,10 @@ function showContent($data)
         case 'webshop':
             require_once('webshop.php');
             showWebshopContent($data);
+            break;
+        case 'detail':
+            require_once('productDetail.php');
+            showProductDetailContent($data);
             break;
         case 'thanks':
             require_once('contact.php');
