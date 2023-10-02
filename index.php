@@ -70,11 +70,16 @@ function processRequest($page){
             break;
         case "webshop":
             require_once('webshop.php');
+            handleAction();
             $data = doRetreiveProducts();
             break;
         case "detail":
             require_once('productDetail.php');
             $data = doRetreiveProductId();
+            break;
+        case "cart":
+            require_once('shoppingCart.php');
+            $data = doRetreiveShoppingCart();
             break;
     }  
     $data['page'] = $page;
@@ -164,7 +169,19 @@ function doRetreiveProductId(){
 }
 
 function doRetreiveShoppingCart(){
-
+    $data = array();
+    $data['succes'] = false;
+    try{
+        require_once 'productService.php';
+        $productId = getUrlVar('id');
+        $data['product'] = getProduct($productId);
+        $data['succes'] = true;
+    }
+    catch(Exception $e){
+        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+        logerror("Product retreiving failed: " . $e -> getMessage());
+    }
+    return $data;
 }
             
 function showResponsePage ($data)

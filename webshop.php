@@ -6,10 +6,10 @@ require_once("utils.php");
 function handleAction(){
     $action = getPostVar("action");
         switch($action){
-            case 'AddToCart':
+            case 'addToCart':
                 $id= getPostVar('productId');
                 $page = getPostVar('page');
-                addToCart($productId);
+                addToCart($id);
                 break;
         }
 }
