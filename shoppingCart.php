@@ -5,10 +5,6 @@ echo 'Winkelwagen';
 }
 
 function showShoppingCartContent($data){
-   /* if (isset($data['succes']) && $data['succes']) {
-        $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
-        if (!empty($cart)) {
-            $products = $data['products'];*/
             $totalPrice = 0;
             foreach (($_SESSION['cart']) as $productId => $amount) {
                 if (isset($products[$productId])) {
@@ -27,7 +23,5 @@ function showShoppingCartContent($data){
                 }
             }
             echo "<p>Totaal: &euro;$totalPrice</p>";
-       /* } else {
-            echo "<p>Je winkelwagen is leeg.</p>";
-        }*/
+      
 }
