@@ -19,7 +19,7 @@ function getRequestedPage()
         $requested_page = getUrlVar('page','home');
     }
     return $requested_page;
-}
+} 
 
 function processRequest($page){ 
     switch($page){
@@ -91,6 +91,7 @@ function processRequest($page){
     return $data;
 }
 
+
 function doStoreContact($data) {
     $data['succes'] = false;
     try{
@@ -151,8 +152,8 @@ function doRetreiveProductId(){
     $data['succes'] = false;
     try{
         require_once 'productService.php';
-        $id = getUrlVar('id');
-        $data['product'] = getProduct($id);
+        $productId = getUrlVar('id');
+        $data['product'] = getProduct($productId);
         $data['succes'] = true;
     }
     catch(Exception $e){
@@ -162,14 +163,8 @@ function doRetreiveProductId(){
     return $data;
 }
 
-function handleAction(){
-    $action = getPostVar("action");
-        switch($action){
-            case 'AddToCart':
-                $id= getPostVar('id');
-                addToCart($id);
-                break;
-        }
+function doRetreiveShoppingCart(){
+
 }
             
 function showResponsePage ($data)
@@ -239,6 +234,9 @@ function showHeader($page)
         require_once('webshop.php');
         showWebshopHeader();
         break;
+    case 'shoppingCart':
+        require_once('shoppingCart.php');
+        showShoppingCartHeader();
     case 'contact':
         require_once ('contact.php');
         showContactHeader();
@@ -299,6 +297,9 @@ function showContent($data)
             require_once('webshop.php');
             showWebshopContent($data);
             break;
+       case 'shoppingCart':
+            require_once('shoppingCart.php');
+            showShoppingCartContent($data);
         case 'detail':
             require_once('productDetail.php');
             showProductDetailContent($data);

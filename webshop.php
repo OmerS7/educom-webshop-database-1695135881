@@ -1,4 +1,19 @@
 <?php
+require_once("session_manager.php");
+require_once("utils.php");
+
+
+function handleAction(){
+    $action = getPostVar("action");
+        switch($action){
+            case 'AddToCart':
+                $id= getPostVar('productId');
+                $page = getPostVar('page');
+                addToCart($productId);
+                break;
+        }
+}
+
 
 function showWebshopHeader(){
     echo "Webshop";
@@ -16,7 +31,7 @@ function showWebshopContent($data) {
             echo "</div>";
             echo '<form method="POST" action="index.php">          
             <input type="hidden" name="action" value="addToCart">
-            <input type="hidden" name="id" value="'.$product["productId"].'">
+            <input type="hidden" name="productId" value="'.$product["productId"].'">
             <input type="hidden" name="page" value="webshop">
             <input type="submit" value="Toevoegen">
         </form>';

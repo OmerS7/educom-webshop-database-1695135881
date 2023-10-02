@@ -31,32 +31,17 @@ function doLogoutUser() {
     session_destroy();
 }
 
-function addToCart($id){
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
 
+function addToCart($productId){
+    var_dump($productId);
     $cart = $_SESSION['cart'];
-
-    if(!array_key_exists($id, $cart)){
-        $cart[$id] = 1;
-    } else {
-        $cart[$id] = $cart[$id] + 1;
-    }
-
-    $_SESSION['cart'] = $cart; // Reassign the modified cart back to the session variable
-}
-/*
-function addToCart($id){
-    $cart= $_SESSION['cart'];
-    if(!array_key_exists($id,$cart)){
-        $cart[$id]= 1;
+    if(!array_key_exists($productId,$cart)){
+        $cart[$productId]= 1;
     }else{
-        $cart[$id]= $cart[$id]+1;
+        $cart[$productId]= $cart[$productId] +1;
     }
+    
 }
-*/
-var_dump($_SESSION['cart']);
-
+    var_dump($_SESSION['cart']);
 
 ?>
