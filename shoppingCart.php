@@ -11,8 +11,8 @@ foreach ($cart as $productId => $quantity) {
         echo '<div class="cart-item">';
         echo "<img src='Images/{$product['productimage']}' alt='{$product['productname']}'>";
         echo "<h3>{$product['productname']}</h3>";
-        echo "<p>Aantal: €{$quantity['quantity']}<p/>";
-        echo "<p>Prijs: €{$product['price']}</p>";
+        echo "<p>Aantal: &euro;{$quantity['quantity']}<p/>";
+        echo "<p>Prijs: &euro;{$product['price']}</p>";
         echo "</div>";
     }
 
