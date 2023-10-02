@@ -77,7 +77,7 @@ function processRequest($page){
             require_once('productDetail.php');
             $data = doRetreiveProductId();
             break;
-        case "cart":
+        case "shoppingCart":
             require_once('shoppingCart.php');
             $data = doRetreiveShoppingCart();
             break;
@@ -254,6 +254,7 @@ function showHeader($page)
     case 'shoppingCart':
         require_once('shoppingCart.php');
         showShoppingCartHeader();
+        break;
     case 'contact':
         require_once ('contact.php');
         showContactHeader();

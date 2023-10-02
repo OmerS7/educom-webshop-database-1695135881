@@ -104,6 +104,7 @@ function getAllProducts(){
 function getProductById($id){
     $conn = connectDatabase();
     try{
+        $id = mysqli_real_escape_string($conn, $id);
         $sql="SELECT * FROM products WHERE productId = $id";
         $result = mysqli_query($conn, $sql);
         return mysqli_fetch_assoc($result);
