@@ -173,8 +173,18 @@ function doRetreiveShoppingCart(){
     $data['succes'] = false;
     try{
         require_once 'productService.php';
-        $productId = getUrlVar('id');
-        $data['product'] = getProduct($productId);
+        $products = getProducts();
+        $cart = getCart();
+        $totalPrice = 0;
+        foreach($cart as $productId => $amount){
+            $product = $products[$productId];
+            $subTotal = $product['price'] * $amount;
+            $totalPrice += $subTotal;
+            $data['cartLines'][] = array("productId" => $productId, "amount" => $amount,
+                                         "subTotal" => $subTotal, "name" => $product["productname"], 
+                                         "image" => $product["productimage"], "price" => $product["price"]); 
+        }
+        $data["totalPrice"] = $totalPrice;
         $data['succes'] = true;
     }
     catch(Exception $e){
@@ -318,6 +328,7 @@ function showContent($data)
        case 'shoppingCart':
             require_once('shoppingCart.php');
             showShoppingCartContent($data);
+            break;
         case 'detail':
             require_once('productDetail.php');
             showProductDetailContent($data);

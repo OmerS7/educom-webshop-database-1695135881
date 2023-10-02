@@ -40,6 +40,11 @@ function addToCart($productId){
         $_SESSION['cart'][$productId]= $cart[$productId] +1;
     }
 }
+
+function getCart(){
+    $cart = $_SESSION['cart'];
+    return $cart;
+}
     
 
 ?>
