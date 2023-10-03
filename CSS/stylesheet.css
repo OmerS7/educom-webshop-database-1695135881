@@ -169,3 +169,15 @@ font-size: 30px;
 .shoesize img {
     max-width: 350px;
 }
+
+table tr {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+    table td {
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
+        box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+    }

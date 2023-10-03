@@ -47,4 +47,19 @@ function getCart(){
 }
     
 
+function addDeleteButton(){
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $productId = $_POST['productId'];
+
+        if (isset($_POST['increase'])) {
+            // Verhoog het aantal van het product met productId
+            $_SESSION['cart'][$productId]++;
+        } elseif (isset($_POST['decrease'])) {
+            // Verlaag het aantal van het product met productId, met een minimum van 1
+            if ($_SESSION['cart'][$productId] > 1) {
+                $_SESSION['cart'][$productId]--;
+            }
+        }
+    }
+}
 ?>

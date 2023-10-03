@@ -81,6 +81,10 @@ function processRequest($page){
             require_once('shoppingCart.php');
             $data = doRetreiveShoppingCart();
             break;
+        case "addDeleteButton":
+            require_once('updateCart.php');
+            $data = doRetreiveShoppingCart();
+            break;
     }  
     $data['page'] = $page;
     
@@ -265,6 +269,10 @@ function showHeader($page)
         require_once('shoppingCart.php');
         showShoppingCartHeader();
         break;
+    case 'addDeleteButton':
+        require_once('shoppingCart.php');
+        showShoppingCartHeader();
+        break;
     case 'contact':
         require_once ('contact.php');
         showContactHeader();
@@ -281,6 +289,7 @@ function showHeader($page)
         require_once('passwordC.php');
         showChangePasswordHeader();
         break;
+
    }
    
     echo '</h1></header>' . PHP_EOL;

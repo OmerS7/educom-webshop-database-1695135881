@@ -23,6 +23,7 @@ function showShoppingCartContent($data){
     echo '<table>';
     echo '<tr>';
     echo '<th>Product</th>';
+    echo '<th>add/delete</th>';
     echo '<th>Naam</th>';
     echo '<th>Aantal</th>';
     echo '<th>Subtotaal</th>';
@@ -31,6 +32,15 @@ function showShoppingCartContent($data){
     foreach ($data["cartLines"] as $cartLine) {
         echo '<tr>';
         echo '<td><img src="Images/' . $cartLine["image"] . '" alt="' . $cartLine["name"] . '"></td>';
+        echo '<td>';
+        echo '<form method="POST" action="index.php">  
+                <input type="hidden" name="action" value="addDeleteButton">
+                <input type="hidden" name="productId" value="' . $cartLine["productId"] . '">
+                <input type="hidden" name="page" value="Winkelwagen">
+                <input type="submit" name="increase" value="+">
+                <input type="submit" name="decrease" value="-">
+              </form>';
+        echo '</td>';
         echo '<td>' . $cartLine["name"] . '</td>';
         echo '<td>' . $cartLine["amount"] . '</td>';
         echo '<td>&euro;' . $cartLine["subTotal"] . '</td>';
