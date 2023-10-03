@@ -11,6 +11,11 @@ function handleAction(){
                 $page = getPostVar('page');
                 addToCart($id);
                 break;
+            case 'updateCart':
+                $id= getPostVar('productId');
+                $amount = getPostVar('amount');
+                updateCart($id, $amount);
+                break;
         }
 }
 
