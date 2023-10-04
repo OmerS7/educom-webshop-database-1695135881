@@ -21,33 +21,28 @@ function showShoppingCartContent($data){
 
 function showShoppingCartContent($data){
     echo '<table>';
-    echo '<tr>';
-    echo '<th>Product</th>';
-    echo '<th>Naam</th>';
-    echo '<th>Aantal</th>';
-    echo '<th>Subtotaal</th>';
-    echo '</tr>';
-
+    
     foreach ($data["cartLines"] as $cartLine) {
         echo '<tr>';
-        echo '<td><img src="Images/' . $cartLine["image"] . '" alt="' . $cartLine["name"] . '"></td>';
-        echo '<td>' . $cartLine["name"] . '</td>';
-        echo '<td>';
+        echo '<td class="product">';
+        echo '<img src="Images/' . $cartLine["image"] . '" alt="' . $cartLine["name"] . '">';
+        echo '<div class="product-details">';
+        echo '<span class="product-name">' . $cartLine["name"] . '</span>';
         echo '<form method="POST" action="index.php?page=shoppingCart">  
                 <input type="hidden" name="action" value="updateCart">
                 <input type="hidden" name="page" value="shoppingCart">
                 <input type="hidden" name="productId" value="' . $cartLine["productId"] . '">
                 <input type="number" name="amount" min="1" value="' . $cartLine["amount"] . '">
-                <input type="submit" value="Update">
+                <input type="image" src="Images/tick-svgrepo-com.svg" alt="Add" width="20" height="20">
               </form>';
+        echo '</div>';
         echo '</td>';
-        echo '<td>&euro;' . $cartLine["subTotal"] . '</td>';
+        echo '<td>Subtotaal&euro;' . $cartLine["subTotal"] . '</td>';
         echo '</tr>';
     }
 
     echo '<tr>';
-    echo '<td colspan="3">Totaal:</td>';
-    echo '<td>&euro;' . $data["totalPrice"] . '</td>';
+    echo '<td>Totaal: &euro;' . $data["totalPrice"] . '</td>';
     echo '</tr>';
 
     echo '</table>';
