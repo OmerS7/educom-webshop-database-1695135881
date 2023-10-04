@@ -16,6 +16,10 @@ function handleAction(){
                 $amount = getPostVar('amount');
                 updateCart($id, $amount);
                 break;
+            case 'deleteFromCart':
+                $id= getPostVar('productId');
+                deleteFromCart($id);
+                break;
         }
 }
 

@@ -194,28 +194,6 @@ function doRetreiveShoppingCart(){
     }
     return $data;
 }
-
-/*
-function doRetrieveAddButton(){
-    $data = array();
-    $data['succes'] = false;
-    try{
-        require_once 'productService.php';
-        $products = getProducts();
-        $addButton = addDeleteButton();
-        foreach($cart as $productId => $amount){
-            $product = $products[$productId];
-            
-
-
-        $data['succes'] = true;
-    }
-    catch(Exception $e){
-        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
-        logerror("Product retreiving failed: " . $e -> getMessage());
-    }
-    return $data;
-}*/
             
 function showResponsePage ($data)
 {
@@ -289,6 +267,10 @@ function showHeader($page)
         showShoppingCartHeader();
         break;
     case 'updateCart':
+        require_once('shoppingCart.php');
+        showShoppingCartHeader();
+        break;
+    case 'deleteFromCart':
         require_once('shoppingCart.php');
         showShoppingCartHeader();
         break;
