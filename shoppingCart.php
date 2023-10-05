@@ -57,4 +57,11 @@ function showShoppingCartContent($data){
 
     echo '</table>';
 }
-?>
+
+function showCheckOutCartContent($data){
+    echo 'form method="POST" action="index.php?page=shoppingCart">
+          <input type="hidden" name="action" value="checkOutCart">
+          <input type="hidden" name="page" value="shoppingCart">
+          <input type="submit" value="Order">
+          </form>';
+}

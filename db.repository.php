@@ -112,3 +112,27 @@ function getProductById($id){
         mysqli_close($conn);
     }
 }
+
+function saveCheckOutCart($id,$orderNumber){
+    $conn = connectDatabase();
+    try{
+        // step 1: insert a new order
+        $sql="INSERT INTO orders(userid,orderdate,ordernumber)
+        VALUES ('$userId', NOW(), CONCAT (YEAR(NOW()),'000000'))";
+
+        $result = mysqli_query($conn, $sql);
+        if(!$result){
+            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+        }
+        // step2: find highest ordernumber
+        $sql="SELECT MAX(ordernumber) AS maxordernumber FROM orders";
+        $result = mysqli_query($conn, $sql);
+        $orderNumber = mysqli_fetch_assoc($result);
+        $maxOrderNumber = $orderNumber['maxordernumber'];
+        // step 3: update record from step 1 to update the ordernumber to be maxordernumber + 1
+        $sql="UPDATE orders SET ordernumber= ordernumber +1 WHERE ordernumber= '$maxOrderNumber'";
+        $result = mysqli_query($conn, $sql);
+    } finally {
+        mysqli_close($conn);
+    } 
+}

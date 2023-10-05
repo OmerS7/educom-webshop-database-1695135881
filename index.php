@@ -274,6 +274,10 @@ function showHeader($page)
         require_once('shoppingCart.php');
         showShoppingCartHeader();
         break;
+    case 'checkOutCart':
+        require_once('shoppingCart.php');
+        showShoppingCartHeader();
+        break;
     case 'contact':
         require_once ('contact.php');
         showContactHeader();
@@ -335,9 +339,13 @@ function showContent($data)
             require_once('webshop.php');
             showWebshopContent($data);
             break;
-       case 'shoppingCart':
+        case 'shoppingCart':
             require_once('shoppingCart.php');
             showShoppingCartContent($data);
+            break;
+        case 'checkOutCart':
+            require_once('shoppingCart.php');
+            showCheckOutCartContent($data);
             break;
         case 'detail':
             require_once('productDetail.php');
