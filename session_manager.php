@@ -53,17 +53,6 @@ function updateCart($productId, $amount){
     }
     return $cart;
 }
-/*
-function deleteFromCart($productId, $amount){
-    $cart = $_SESSION['cart'];
-    if(isset($cart[$productId]) && is_numeric($amount) && $amount < 1) {
-        unset($cart[$productId]);
-    }
-
-    $_SESSION['cart'] = $cart;
-
-    return $cart;
-}*/
 
 function deleteFromCart($productId){
     $cart = $_SESSION['cart'];
@@ -76,4 +65,11 @@ function deleteFromCart($productId){
     return $cart;
 }
 
+/*
+function checkOutCart($id, $orderNumber)
+    $cart = $_SESSION['cart'];
+    saveCheckOutCart($id, $orderNumber);
+    $_SESSION['cart'] = array();
+    return $cart;
+    */
 ?>

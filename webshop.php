@@ -20,10 +20,10 @@ function handleAction(){
                 $id= getPostVar('productId');
                 deleteFromCart($id);
                 break;
-            case 'checkOutCart':
+            /*case 'checkOutCart':
                 $id= getLoggedInUserId();
                 checkOutCart($id, $orderNumber);
-                break;
+                break;*/
         }
 }
 

@@ -4,21 +4,6 @@ function showShoppingCartHeader(){
 echo 'Winkelwagen';
 }
 
-/*
-function showShoppingCartContent($data){
-    foreach ($data["cartLines"] as $cartLine) {
-        echo '<div class="cart-product">';
-        echo "<img src='Images/$cartLine[image]' alt='$cartLine[name]'>";
-        echo "<h3>$cartLine[name]</h3>";
-        echo "<a href='index.php?page=shoppingCart&id=$cartLine[productId]'>Ga naar winkelwagen";
-        echo "<p>Aantal: $cartLine[amount]<p/>";
-        echo "<p>Subtotaal: &euro;$cartLine[subTotal]</p>";
-        echo "</a>";
-        echo "</div>";
-        }
-            echo "<p>Totaal: &euro;$data[totalPrice]</p>";
-}*/
-
 function showShoppingCartContent($data){
     echo '<table>';
 
@@ -28,7 +13,7 @@ function showShoppingCartContent($data){
         echo '<img src="Images/' . $cartLine["image"] . '" alt="' . $cartLine["name"] . '" class="product-photo">';
         echo '<div class="product-details">';
         echo '<span class="product-name">' . $cartLine["name"] . '</span>';
-        echo '<form method="POST" action="index.php?page=shoppingCart">  
+        echo '<form method="POST" action="index.php">  
                 <input type="hidden" name="action" value="updateCart">
                 <input type="hidden" name="page" value="shoppingCart">
                 <input type="hidden" name="productId" value="' . $cartLine["productId"] . '">
@@ -37,7 +22,7 @@ function showShoppingCartContent($data){
                 <input type="image" class="tick-button" src="Images/tick-svgrepo-com.svg" alt="Add" width="20" height="20">
                 </div>
             </form>';
-        echo '<form method="POST" action="index.php?page=shoppingCart">
+        echo '<form method="POST" action="index.php">
              <input type="hidden" name="action" value="deleteFromCart">
              <input type="hidden" name="page" value="shoppingCart">
              <input type="hidden" name="productId" value="' . $cartLine["productId"] . '">
@@ -56,12 +41,10 @@ function showShoppingCartContent($data){
     echo '</tr>';
 
     echo '</table>';
-}
 
-function showCheckOutCartContent($data){
-    echo 'form method="POST" action="index.php?page=shoppingCart">
-          <input type="hidden" name="action" value="checkOutCart">
-          <input type="hidden" name="page" value="shoppingCart">
-          <input type="submit" value="Order">
-          </form>';
+    echo '<form method="POST" action="index.php">
+            <input type="hidden" name="action" value="checkOutCart">
+            <input type="hidden" name="page" value="shoppingCart">
+            <input type="submit" value="Order">
+         </form>';
 }
