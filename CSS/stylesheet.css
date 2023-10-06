@@ -19,7 +19,7 @@ header {
 
 
 .menu ul {
-    display: flex;
+    display: inline-block;
     justify-content: center;
     align-items: center;
     list-style: none;
@@ -44,7 +44,10 @@ header {
 }
 
 .menu a img{
-    height: 30px;
+    height: 20px;
+    display: inline-block; /* Zorgt ervoor dat het element een blok op dezelfde regel is */
+    vertical-align: middle; /* Zorgt ervoor dat de afbeelding verticaal gecentreerd wordt */
+    margin-bottom: 5px;
 }
 
 .menu {
