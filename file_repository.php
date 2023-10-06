@@ -5,7 +5,7 @@ function findUserByEmail($email){
 
     while (!feof($fileContent)) {
         $line = fgets($fileContent);
-        $userData = explode("|", $line);
+        $userData = explode("|", $line, 3);
 
         if ($userData[0] == $email) {
             $user = array(
