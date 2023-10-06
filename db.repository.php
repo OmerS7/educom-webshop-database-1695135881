@@ -30,6 +30,8 @@ function saveUser($email,$username,$password){
     $conn = connectDatabase();
     try{
         $email = mysqli_real_escape_string($conn, $email);
+        $username = mysqli_real_escape_string($conn, $username);
+        $password = mysqli_real_escape_string($conn, $password);
         $sql ="INSERT INTO users (username, email, `password`)
         VALUES ('$username', '$email', '$password')";
         $result = mysqli_query($conn, $sql);
@@ -45,6 +47,11 @@ function saveContact($name,$phone,$email,$salutation,$communication,$comment){
     $conn = connectDatabase();
     try{
         $email = mysqli_real_escape_string($conn, $email);
+        $name = mysqli_real_escape_string($conn, $name);
+        $phone = mysqli_real_escape_string($conn, $phone);
+        $salutation = mysqli_real_escape_string($conn, $salutation);
+        $communication = mysqli_real_escape_string($conn, $communication);
+        $comment = mysqli_real_escape_string($conn, $comment);
         $sql ="INSERT INTO contact(`name`, phone, email, salutation, communication, comment)
         VALUES ('$name', '$phone', '$email', '$salutation', '$communication', '$comment')";
         $result = mysqli_query($conn, $sql);
@@ -59,7 +66,7 @@ function saveContact($name,$phone,$email,$salutation,$communication,$comment){
 function findUserById($userId){
     $conn = connectDatabase();
     try{
-        ///$email = mysqli_real_escape_string($conn, $email);
+        $userId = mysqli_real_escape_string($conn, $UserId);
         $sql ="SELECT * FROM users WHERE `id` ='$userId'";
         $result = mysqli_query($conn, $sql);
 
@@ -74,6 +81,8 @@ function findUserById($userId){
 
 /// wachtwoord wijzigen functie
 function saveChangePassword($id,$password){
+    $id = mysqli_real_escape_string($conn, $id);
+    $password = mysqli_real_escape_string($conn, $password);
     $conn = connectDatabase();
     try{
         $sql ="UPDATE users SET `password` ='$password' WHERE id = '$id'";
@@ -102,6 +111,7 @@ function getAllProducts(){
 } 
 
 function getProductById($id){
+    $email = mysqli_real_escape_string($conn, $id);
     $conn = connectDatabase();
     try{
         $id = mysqli_real_escape_string($conn, $id);
@@ -114,6 +124,8 @@ function getProductById($id){
 }
 
 function saveCheckOutCart($id,$orderNumber){
+    $id = mysqli_real_escape_string($conn, $id);
+    $orderNumber = mysqli_real_escape_string($conn, $orderNumber);
     $conn = connectDatabase();
     try{
         // step 1: insert a new order
