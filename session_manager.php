@@ -65,11 +65,11 @@ function deleteFromCart($productId){
     return $cart;
 }
 
-/*
-function checkOutCart($id, $orderNumber)
+function checkOutCart($id){
     $cart = $_SESSION['cart'];
-    saveCheckOutCart($id, $orderNumber);
+    require_once ('db.repository.php');
+    saveCheckOutCart($id, $cart);
     $_SESSION['cart'] = array();
     return $cart;
-    */
+}
 ?>

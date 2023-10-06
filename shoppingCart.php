@@ -42,9 +42,12 @@ function showShoppingCartContent($data){
 
     echo '</table>';
 
-    echo '<form method="POST" action="index.php">
-            <input type="hidden" name="action" value="checkOutCart">
-            <input type="hidden" name="page" value="shoppingCart">
-            <input type="submit" value="Order">
-         </form>';
+    if(!empty($data['cartLines']) ){
+        echo '<form method="POST" action="index.php">
+        <input type="hidden" name="action" value="checkOutCart">
+        <input type="hidden" name="page" value="shoppingCart">
+        <input type="submit" value="Order">
+     </form>';
+    }
+
 }

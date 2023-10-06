@@ -79,20 +79,25 @@ function processRequest($page){
             break;
         case "shoppingCart":
             require_once('webshop.php');
-            handleAction();
-            $data = doRetreiveShoppingCart();
+            $data = handleAction();
+            $data = array_merge($data,doRetreiveShoppingCart());
             break;
+       /* case "orders":
+            require_once('orders.php')
+            $data = 
+            break;*/
     }  
     $data['page'] = $page;
     
-    $data['menu'] = array('home' => 'HOME', 'about' => 'ABOUT', 'contact' => 'CONTACT', 'webshop' => 'WEBSHOP');
+    $data['menu'] = array('home' => ['HOME'], 'about' => ['ABOUT'], 'contact' => ['CONTACT'], 'webshop' => ['WEBSHOP']);
     if (isUserLoggedIn()) {
-        $data['menu']['shoppingCart'] = "Winkelwagen"; 
-        $data['menu']['changepassword'] = "Wachtwoord wijzigen";
-        $data['menu']['logout'] = "LOG OUT " . getLoggedInUser();
+        $data['menu']['shoppingCart'] = ["","cart-shopping-fast-svgrepo-com.svg"]; 
+        $data['menu']['changepassword'] = ["Wachtwoord wijzigen"];
+        $data['menu']['orders'] = ["Jouw Orders"];
+        $data['menu']['logout'] = ["LOG OUT " . getLoggedInUser()];
     } else {
-        $data['menu']['register'] = "REGISTER";
-        $data['menu']['login'] = "LOGIN";
+        $data['menu']['register'] = ["REGISTER"];
+        $data['menu']['login'] = ["LOGIN"];
     }
     return $data;
 }
@@ -177,6 +182,7 @@ function doRetreiveShoppingCart(){
         $products = getProducts();
         $cart = getCart();
         $totalPrice = 0;
+        $data['cartLines'] = array();
         foreach($cart as $productId => $amount){
             $product = $products[$productId];
             $subTotal = $product['price'] * $amount;
@@ -278,6 +284,10 @@ function showHeader($page)
         require_once('shoppingCart.php');
         showShoppingCartHeader();
         break;
+    case 'orders':
+        require_once('orders.php');
+        showOrdersHeader();
+        break;
     case 'contact':
         require_once ('contact.php');
         showContactHeader();
@@ -300,17 +310,22 @@ function showHeader($page)
     echo '</h1></header>' . PHP_EOL;
 }
 
-function showMenuItem($page, $label)
+function showMenuItem($page, $menuItem)
 {
-    echo '<li><a href="index.php?page=' . $page . '">' . $label . '</a></li>';
+    echo '<li><a href="index.php?page=' . $page . '">';
+    if(count($menuItem)>1){
+        echo"<img src=\"Images/$menuItem[1]\">";
+    }
+    echo $menuItem[0];
+    echo '</a></li>';
 }
 
 
 function showMenu($data) {  
     echo '<div class="menu">   
         <ul>';  
-    foreach($data['menu'] as $link => $label) { 
-        showMenuItem($link,$label); 
+    foreach($data['menu'] as $link => $menuItem) { 
+        showMenuItem($link, $menuItem); 
     }
     echo ' 
         </ul>   
@@ -346,6 +361,10 @@ function showContent($data)
         case 'checkOutCart':
             require_once('shoppingCart.php');
             showCheckOutCartContent($data);
+            break;
+        case 'orders':
+            require_once('orders.php');
+            showOrdersContent($data);
             break;
         case 'detail':
             require_once('productDetail.php');

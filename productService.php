@@ -8,3 +8,7 @@ function getProducts(){
 function getProduct($id){
     return getProductById($id);
 }
+
+function storeCheckOutCart($id,$orderNumber){
+    saveCheckOutCart($id,$orderNumber);
+}

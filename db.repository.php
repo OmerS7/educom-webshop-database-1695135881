@@ -66,7 +66,7 @@ function saveContact($name,$phone,$email,$salutation,$communication,$comment){
 function findUserById($userId){
     $conn = connectDatabase();
     try{
-        $userId = mysqli_real_escape_string($conn, $UserId);
+        $userId = mysqli_real_escape_string($conn, $userId);
         $sql ="SELECT * FROM users WHERE `id` ='$userId'";
         $result = mysqli_query($conn, $sql);
 
@@ -81,10 +81,10 @@ function findUserById($userId){
 
 /// wachtwoord wijzigen functie
 function saveChangePassword($id,$password){
-    $id = mysqli_real_escape_string($conn, $id);
-    $password = mysqli_real_escape_string($conn, $password);
     $conn = connectDatabase();
     try{
+        $id = mysqli_real_escape_string($conn, $id);
+        $password = mysqli_real_escape_string($conn, $password);
         $sql ="UPDATE users SET `password` ='$password' WHERE id = '$id'";
         $result = mysqli_query($conn, $sql);
         if(!$result){
@@ -111,7 +111,6 @@ function getAllProducts(){
 } 
 
 function getProductById($id){
-    $email = mysqli_real_escape_string($conn, $id);
     $conn = connectDatabase();
     try{
         $id = mysqli_real_escape_string($conn, $id);
@@ -123,28 +122,55 @@ function getProductById($id){
     }
 }
 
-function saveCheckOutCart($id,$orderNumber){
-    $id = mysqli_real_escape_string($conn, $id);
-    $orderNumber = mysqli_real_escape_string($conn, $orderNumber);
+function saveCheckOutCart($userId,$cart){
     $conn = connectDatabase();
     try{
         // step 1: insert a new order
+        $userId = mysqli_real_escape_string($conn, $userId);
         $sql="INSERT INTO orders(userid,orderdate,ordernumber)
-        VALUES ('$userId', NOW(), CONCAT (YEAR(NOW()),'000000'))";
+              VALUES ('$userId', NOW(), CONCAT (YEAR(NOW()),'000000'))";
 
         $result = mysqli_query($conn, $sql);
         if(!$result){
             throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
         }
+        $orderId = mysqli_insert_id($conn);
         // step2: find highest ordernumber
         $sql="SELECT MAX(ordernumber) AS maxordernumber FROM orders";
         $result = mysqli_query($conn, $sql);
+        if(!$result){
+            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+        }
         $orderNumber = mysqli_fetch_assoc($result);
         $maxOrderNumber = $orderNumber['maxordernumber'];
         // step 3: update record from step 1 to update the ordernumber to be maxordernumber + 1
-        $sql="UPDATE orders SET ordernumber= ordernumber +1 WHERE ordernumber= '$maxOrderNumber'";
+        $sql="UPDATE orders SET ordernumber= $maxOrderNumber +1 WHERE id= '$orderId'";
         $result = mysqli_query($conn, $sql);
+        if(!$result){
+            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+        }
+
+        foreach($cart as $productId => $amount){
+            $sql="INSERT INTO productline(orderid, productid, amount)
+                  VALUES ($orderId, $productId, $amount)"; 
+            $result = mysqli_query($conn, $sql);
+            if(!$result){
+                throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+            }
+        }
+        
     } finally {
         mysqli_close($conn);
     } 
 }
+
+function getOrders(){
+    $conn = connectDatabase();
+    try{
+
+    } finally{
+        mysqli_close($conn);
+    }
+}
+
+

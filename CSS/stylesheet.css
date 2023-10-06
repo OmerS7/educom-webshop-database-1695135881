@@ -34,13 +34,17 @@ header {
 
 .menu a {
     color: white;
-    background-color: rgb(75, 75, 75);
+    background-color: rgb(166, 166, 166);
     text-decoration: none;
     border-radius: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.menu a img{
+    height: 30px;
 }
 
 .menu {
