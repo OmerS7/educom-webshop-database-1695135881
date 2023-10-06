@@ -89,12 +89,12 @@ function processRequest($page){
     }  
     $data['page'] = $page;
     
-    $data['menu'] = array('home' => ['HOME'], 'about' => ['ABOUT'], 'contact' => ['CONTACT'], 'webshop' => ['WEBSHOP']);
+    $data['menu'] = array('home' => ['HOME'], 'about' => ['ABOUT'], 'contact' => ['CONTACT'], 'webshop' => ['','NikeLogoWhite.png']);
     if (isUserLoggedIn()) {
-        $data['menu']['shoppingCart'] = ["","cart-shopping-fast-svgrepo-com.svg"]; 
-        $data['menu']['changepassword'] = ["Wachtwoord wijzigen"];
-        $data['menu']['orders'] = ["Jouw Orders"];
-        $data['menu']['logout'] = ["LOG OUT " . getLoggedInUser()];
+        $data['menu']['shoppingCart'] = ["","cart.svg"]; 
+        $data['menu']['orders'] = ["","cartorders.svg"];
+        $data['menu']['changepassword'] = ["","lock.svg"];
+        $data['menu']['logout'] = ["" . getLoggedInUser(),"logout.svg"];
     } else {
         $data['menu']['register'] = ["REGISTER"];
         $data['menu']['login'] = ["LOGIN"];
