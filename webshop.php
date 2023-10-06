@@ -24,7 +24,7 @@ function handleAction(){
             case 'checkOutCart':
                 $id= getLoggedInUserId();
                 checkOutCart($id);
-                $data['genericErr'] = "Uw order is succesvol afgehandeld!";
+                $data['genericErr'] = "Uw bestelling is succesvol afgehandeld! <br> Voor een volledig overzicht van jouw bestelling, klik op de icon 'Overzicht bestellingen' in de menubalk.";
                 break;
         }
     return $data;

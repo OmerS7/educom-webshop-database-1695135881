@@ -132,14 +132,14 @@ function saveCheckOutCart($userId,$cart){
 
         $result = mysqli_query($conn, $sql);
         if(!$result){
-            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+            throw new Exception("save checkout failed, sql:$sql,error: " . mysqli_error($conn));
         }
         $orderId = mysqli_insert_id($conn);
         // step2: find highest ordernumber
         $sql="SELECT MAX(ordernumber) AS maxordernumber FROM orders";
         $result = mysqli_query($conn, $sql);
         if(!$result){
-            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+            throw new Exception("save checkout failed, sql:$sql,error: " . mysqli_error($conn));
         }
         $orderNumber = mysqli_fetch_assoc($result);
         $maxOrderNumber = $orderNumber['maxordernumber'];
@@ -147,7 +147,7 @@ function saveCheckOutCart($userId,$cart){
         $sql="UPDATE orders SET ordernumber= $maxOrderNumber +1 WHERE id= '$orderId'";
         $result = mysqli_query($conn, $sql);
         if(!$result){
-            throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+            throw new Exception("save checkout failed, sql:$sql,error: " . mysqli_error($conn));
         }
 
         foreach($cart as $productId => $amount){
@@ -155,19 +155,24 @@ function saveCheckOutCart($userId,$cart){
                   VALUES ($orderId, $productId, $amount)"; 
             $result = mysqli_query($conn, $sql);
             if(!$result){
-                throw new Exception("save user failed, sql:$sql,error: " . mysqli_error($conn));
+                throw new Exception("save checkout failed, sql:$sql,error: " . mysqli_error($conn));
             }
         }
-        
     } finally {
         mysqli_close($conn);
     } 
 }
 
-function getOrders(){
+function getAllOrders(){
     $conn = connectDatabase();
     try{
-
+        $orders = array();
+        $sql="SELECT * FROM orders";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+            $orders[$row['id']] = $row;
+        }
+        return $orders;
     } finally{
         mysqli_close($conn);
     }

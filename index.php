@@ -82,10 +82,10 @@ function processRequest($page){
             $data = handleAction();
             $data = array_merge($data,doRetreiveShoppingCart());
             break;
-       /* case "orders":
-            require_once('orders.php')
-            $data = 
-            break;*/
+        case "orders":
+            require_once('orders.php');
+            $data = doRetreiveOrders();
+            break;
     }  
     $data['page'] = $page;
     
@@ -197,6 +197,21 @@ function doRetreiveShoppingCart(){
     catch(Exception $e){
         $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
         logerror("Product retreiving failed: " . $e -> getMessage());
+    }
+    return $data;
+}
+
+function doRetreiveOrders(){
+    $data = array();
+    $data['succes'] = false;
+    try{
+        require_once 'productService.php';
+        $data['orders'] = getOrders();
+        $data['succes'] = true;
+    }
+    catch(Exception $e){
+        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+        logerror("Order retreiving failed: " . $e -> getMessage());
     }
     return $data;
 }
