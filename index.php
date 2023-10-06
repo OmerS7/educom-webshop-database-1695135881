@@ -86,6 +86,10 @@ function processRequest($page){
             require_once('orders.php');
             $data = doRetreiveOrders();
             break;
+        case "orderDetail":
+            require_once('orderDetail.php');
+            $data = doRetreiveOrderId();
+            break;
     }  
     $data['page'] = $page;
     
@@ -380,6 +384,10 @@ function showContent($data)
         case 'orders':
             require_once('orders.php');
             showOrdersContent($data);
+            break;
+        case 'orderDetail':
+            require_once('orderDetail.php');
+            showOrderDetailContent($data);
             break;
         case 'detail':
             require_once('productDetail.php');
