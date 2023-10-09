@@ -219,12 +219,14 @@ function doRetreiveOrders(){
     }
     return $data;
 }
+
 function doRetreiveOrderId(){
     $data = array();
     $data['succes'] = false;
     try{
         require_once 'productService.php';
-        $data['orders'] = getOrders();
+        $id = getOrderById('id');
+        $data['orders'] = getOrder($id);
         $data['succes'] = true;
     }
     catch(Exception $e){

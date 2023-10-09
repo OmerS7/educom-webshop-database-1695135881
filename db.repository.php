@@ -178,4 +178,16 @@ function getAllOrders(){
     }
 }
 
+function getOrderById($id){
+    $conn = connectDatabase();
+    try{
+        $sql="SELECT orders.id, orders.date, oders.ordersnumber FROM orders
+        JOIN productlines //ga hier verder"
+        $result = mysqli_query($conn, $sql);
+        return mysqli_fetch_assoc($result);
+    } finally{
+        mysqli_close($conn);
+    }
+}
+
 

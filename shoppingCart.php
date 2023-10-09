@@ -6,6 +6,11 @@ echo 'Winkelwagen';
 
 function showShoppingCartContent($data){
     echo '<table>';
+    var_dump($_SESSION['cart']);
+    if(empty($_SESSION['cart'])){
+        echo 'Uw winkelmand is leeg';
+        return;
+    }
 
     foreach ($data['cartLines'] as $cartLine){
         echo '<tr>';
@@ -41,6 +46,7 @@ function showShoppingCartContent($data){
     echo '</tr>';
 
     echo '</table>';
+
 
     if(!empty($data['cartLines']) ){
         echo '<form method="POST" action="index.php">

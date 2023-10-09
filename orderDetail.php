@@ -5,14 +5,13 @@ function showOrderDetailHeader(){
 }
 
 function showOrderDetailContent($data) {
-    $order = getArrayVar($data, 'order', NULL);
+    //var_dump($data);
+    var_dump($data['orders']);
+    $orders = getArrayVar($data, 'orders', NULL);
 
-    if ($order) {
+    if ($orders) {
         echo '<div class="orderOverzicht">';
-        echo "<h1>$order[productname]</h1>";
-        echo "<p>Prijs: &euro;$order[price]</p>";
-        echo "<img src='Images/$order[productimage]' alt='$order[productname]'>";
-        echo "<p>$order[description]</p>";
+        echo $orders['id'];
         echo "</div>"; 
     } else {
         echo"Er is een probleem met het ophalen van de order(s).";

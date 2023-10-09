@@ -10,5 +10,9 @@ function getProduct($id){
 }
 
 function getOrders(){
-    getAllOrders();
+    return getAllOrders();
+}
+
+function getOrder($id){
+    return getOrderById($id);
 }
