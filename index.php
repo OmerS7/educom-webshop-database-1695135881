@@ -219,7 +219,21 @@ function doRetreiveOrders(){
     }
     return $data;
 }
-            
+function doRetreiveOrderId(){
+    $data = array();
+    $data['succes'] = false;
+    try{
+        require_once 'productService.php';
+        $data['orders'] = getOrders();
+        $data['succes'] = true;
+    }
+    catch(Exception $e){
+        $data['genericErr']="Er is een technische storing. Probeer het later nog eens.";
+        logerror("Order retreiving failed: " . $e -> getMessage());
+    }
+    return $data;
+}
+
 function showResponsePage ($data)
 {
     beginDocument();
@@ -306,6 +320,10 @@ function showHeader($page)
     case 'orders':
         require_once('orders.php');
         showOrdersHeader();
+        break;
+    case 'orderDetail':
+        require_once('orderDetail.php');
+        showOrderDetailHeader();
         break;
     case 'contact':
         require_once ('contact.php');

@@ -15,9 +15,10 @@ echo '<table>';
             echo "<p>Met ordernummer:</p>";
             echo "<p> $order[orderNumber]</p>";
             echo "</div>";
-            echo '<from methode="POST" action="index.php">
-                  <input type="hidden" name="action" value="addToCart">
-                  <input type="hidden" name="page" value="orders">
+            echo '<form method="POST" action="index.php">
+                  <input type="hidden" name="action" value="viewDetails">
+                  <input type="hidden" name="id" value="'.$order['id'].'">
+                  <input type="hidden" name="page" value="orderDetail">
                   <input type="submit" value="Overzicht Bestelling">
                   </form>';
             echo '</tr>';
