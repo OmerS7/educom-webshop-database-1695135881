@@ -167,7 +167,11 @@ function getAllOrders(){
     $conn = connectDatabase();
     try{
         $orders = array();
-        $sql="SELECT * FROM orders";
+        $sql="SELECT o.id, o.orderDate, o.orderNumber, SUM(pl.amount * p.price) AS 'total'
+        FROM orders AS o
+        JOIN productline AS pl ON pl.orderid = o.id
+        JOIN products AS p ON p.productId = pl.productId
+        GROUP BY o.id";
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)) {
             $orders[$row['id']] = $row;
@@ -181,10 +185,17 @@ function getAllOrders(){
 function getOrderById($id){
     $conn = connectDatabase();
     try{
-        $sql="SELECT o.id, o.date, o.ordersnumber, pl.amount,  FROM orders
-        JOIN productlines"
+        $sql="SELECT o.id, o.orderDate, o.orderNumber, pl.amount, p.productId, p.productname, p.description, p.price, p.productimage 
+        FROM orders AS o
+        JOIN productline AS pl ON pl.orderid = o.id
+        JOIN products AS p ON p.productId = pl.productId";
         $result = mysqli_query($conn, $sql);
-        return mysqli_fetch_assoc($result);
+        $orders = array(); // Maak een array om de orders op te slaan
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $orders[] = $row; // Voeg elke rij toe aan de array
+        }
+        return $orders;
     } finally{
         mysqli_close($conn);
     }
