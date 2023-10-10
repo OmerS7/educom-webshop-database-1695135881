@@ -5,8 +5,6 @@ function showOrderDetailHeader(){
 }
 
 function showOrderDetailContent($data) {
-    //var_dump($data);
-    var_dump($data['orders']);
     $orders = getArrayVar($data, 'orders', NULL);
 
     if ($orders) {

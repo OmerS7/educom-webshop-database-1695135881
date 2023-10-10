@@ -6,7 +6,6 @@ echo 'Winkelwagen';
 
 function showShoppingCartContent($data){
     echo '<table>';
-    var_dump($_SESSION['cart']);
     if(empty($_SESSION['cart'])){
         echo 'Uw winkelmand is leeg';
         return;
