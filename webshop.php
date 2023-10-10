@@ -42,14 +42,15 @@ function showWebshopContent($data) {
             echo "<img src='Images/$product[productimage]' alt='$product[productname]'>";
             echo "<h3>$product[productname]</h3>";
             echo "<a href='index.php?page=detail&id=$product[productId]'>Productomschrijving"; // Link naar de detailpagina
-            echo "<p>Prijs: &euro;$product[price]</p>";
+            $number_format = number_format($product['price'], 2, ',', '.');
+            echo "<p>Prijs: &euro;$number_format</p>";
             echo "</a>";
             echo "</div>";
             echo '<form method="POST" action="index.php">          
             <input type="hidden" name="action" value="addToCart">
             <input type="hidden" name="productId" value="'.$product["productId"].'">
             <input type="hidden" name="page" value="webshop">
-            <input type="submit" value="Toevoegen">
+            <button type="submit"> <img src="Images/cartPlus.svg" class="addCart"></i></button>
         </form>';
         }
     }

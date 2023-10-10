@@ -7,7 +7,16 @@ echo 'Winkelwagen';
 function showShoppingCartContent($data){
     echo '<table>';
     if(empty($_SESSION['cart'])){
-        echo 'Uw winkelmand is leeg';
+        echo '<img src="Images/winkelmandIcon.svg" class="iconWinkelmand">';
+        echo "<div class='winkelmandtext'>";
+        echo "<p>Je winkelmand is leeg.</p>";
+        echo "<p>Wanneer je producten toevoegt, zie je</p>";
+        echo "<p>ze hier verschijnen.</p>";
+        echo "</div>";
+        echo '<form method="POST" action="index.php"> 
+              <input type="hidden" name="page" value="webshop">
+              <button type="submit" class="shopButton">Shop nu</button>
+              </form>';
         return;
     }
 

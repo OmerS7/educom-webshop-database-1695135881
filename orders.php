@@ -16,7 +16,8 @@ echo '<table>';
            // echo "<p> $order[orderDate]</p>";
             echo "<p>Met ordernummer:</p>";
             echo "<p> $order[orderNumber]</p>";
-            echo "<p>Totaal: &euro;$order[total]</p>";
+            $number_format = number_format($order['total'], 2, ',', '.');
+            echo "<h3>Totaal: &euro;$number_format</h3>";
             echo "</div>";
             echo '<form method="POST" action="index.php">
                   <input type="hidden" name="action" value="viewDetails">
