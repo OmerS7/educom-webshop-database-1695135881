@@ -163,15 +163,17 @@ function saveCheckOutCart($userId,$cart){
     } 
 }
 
-function getAllOrders(){
+function getAllOrders($userId){
     $conn = connectDatabase();
     try{
+        $userId = mysqli_real_escape_string($conn, $userId);
         $orders = array();
         $sql="SELECT o.id, o.orderDate, o.orderNumber, SUM(pl.amount * p.price) AS 'total'
-        FROM orders AS o
-        JOIN productline AS pl ON pl.orderid = o.id
-        JOIN products AS p ON p.productId = pl.productId
-        GROUP BY o.id";
+              FROM orders AS o
+              JOIN productline AS pl ON pl.orderid = o.id
+              JOIN products AS p ON p.productId = pl.productId
+              WHERE o.userId = $userId
+              GROUP BY o.id";
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)) {
             $orders[$row['id']] = $row;
@@ -182,13 +184,16 @@ function getAllOrders(){
     }
 }
 
-function getOrderById($id){
+function getOrderById($id, $userId){
     $conn = connectDatabase();
     try{
+        $id = mysqli_real_escape_string($conn, $id);
+        $userId = mysqli_real_escape_string($conn, $userId);
         $sql="SELECT o.id, o.orderDate, o.orderNumber, pl.amount, p.productId, p.productname, p.description, p.price, p.productimage 
-        FROM orders AS o
-        JOIN productline AS pl ON pl.orderid = o.id
-        JOIN products AS p ON p.productId = pl.productId";
+              FROM orders AS o
+              JOIN productline AS pl ON pl.orderid = o.id
+              JOIN products AS p ON p.productId = pl.productId
+              WHERE o.id = $id AND o.userId = $userId";
         $result = mysqli_query($conn, $sql);
         $orders = array(); // Maak een array om de orders op te slaan
 

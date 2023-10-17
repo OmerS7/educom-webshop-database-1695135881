@@ -50,7 +50,7 @@ function showWebshopContent($data) {
             <input type="hidden" name="action" value="addToCart">
             <input type="hidden" name="productId" value="'.$product["productId"].'">
             <input type="hidden" name="page" value="webshop">
-            <button type="submit"> <img src="Images/cartPlus.svg" class="addCart"></i></button>
+            <button type="submit" class="addToCartButton"> <img src="Images/cartPlus.svg" class="addCart"></i></button>
         </form>';
         }
     }

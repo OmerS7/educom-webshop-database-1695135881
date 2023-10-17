@@ -9,10 +9,10 @@ function getProduct($id){
     return getProductById($id);
 }
 
-function getOrders(){
-    return getAllOrders();
+function getOrders($userId){
+    return getAllOrders($userId);
 }
 
-function getOrder($id){
-    return getOrderById($id);
+function getOrder($id, $userId){
+    return getOrderById($id, $userId);
 }

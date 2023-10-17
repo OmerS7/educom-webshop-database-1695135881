@@ -309,4 +309,17 @@ button.shopButton:hover{
     color: black;
 }
 
-button.
+.addCart{
+    display: flex;
+    height: 30px;
+}
+
+.addToCartButton {
+    background-color: transparent; /* Or any color you prefer */
+    border: none;
+    height: 20px;
+    padding: 20px 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
